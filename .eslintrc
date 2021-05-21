@@ -1,0 +1,20 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": [
+      "standard",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "overrides": [
+      { "files": ["./**/*.test.ts*"], "env": { "jest": true } }
+    ],
+    "rules": {
+      "@typescript-eslint/camelcase": 0,
+      "no-useless-constructor": "off",
+      "@typescript-eslint/no-useless-constructor": "error",
+      "@typescript-eslint/no-empty-function": "warn",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "no-new": "off"
+    }
+  }
