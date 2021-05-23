@@ -8,25 +8,24 @@
 export type TelegramID = number;
 
 export interface User {
-    ID: TelegramID
-    Username?: string
+    id?: TelegramID
+    username?: string
 }
 
 export interface Chat {
-    ID: TelegramID
-    Title?: string
+    id: TelegramID
 }
 
 export interface Message {
-    ID: string
-    From: User
-    Chat: Chat
-    Date: Date
-    Hashtags: string[]
-    Urls: string[]
-    Text: string
+    id: TelegramID
+    from: User
+    chat: Chat
+    date: string // iso8601
+    hashtags: string[]
+    urls: string[]
+    text: string
 }
 
-export const messageHasHashtags = (message: Message): boolean => message.Hashtags.length > 0
-export const messageHasUrls = (message: Message): boolean => message.Urls.length > 0
-export const messageIsFromRecognizedAuthor = (message: Message, author: TelegramID) : boolean => message.From.ID === author 
+export const messageHasHashtags = (message: Message): boolean => message.hashtags.length > 0
+export const messageHasUrls = (message: Message): boolean => message.urls.length > 0
+export const messageIsFromRecognizedAuthor = (message: Message, author: TelegramID) : boolean => message.from.id === author 

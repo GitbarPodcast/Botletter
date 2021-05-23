@@ -5488,7 +5488,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typegram@^3.2.0:
+typegram@^3.2.0, typegram@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/typegram/-/typegram-3.3.1.tgz#af1ca857350a270ed065fb708c19bab36e0d61a7"
   integrity sha512-Y1bR17IZ9Shj1Ih8wTLtrmOOMHJ20ve0Bd5SPymmw53uO4WLp/JjNM55s2b6PEziBvMISRdCQSZ+m6JiUKEobA==

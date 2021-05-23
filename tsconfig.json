@@ -3,6 +3,11 @@
   "exclude": ["**/__tests__", "**/__mocks__"],
   "compilerOptions": {
     "target": "ES2018",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     "module": "commonjs",
     "lib": ["es2018"],
     "declaration": true,
@@ -21,6 +26,7 @@
     "strictPropertyInitialization": false,
     "typeRoots": ["./node_modules/@types"],
     "noEmit": false,
+    "baseUrl": ".",
     "outDir": "build"
   }
 }
