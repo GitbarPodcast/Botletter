@@ -35,7 +35,7 @@ describe('normalizeMessage', () => {
     const convertedMessage = normalizeTelegramMessage(fullMessage);
     expect(convertedMessage).toEqual({
       id: 1,
-      chat: { id: 1 },
+      chat: { id: 1, title: 'gitbar' },
       urls: ['https://gitbar.it'],
       hashtags: ['#test'],
       from: { id: 1, username: 'test' },
@@ -59,7 +59,7 @@ describe('normalizeMessage', () => {
 
     expect(convertedMessage).toEqual({
       id: 1,
-      chat: { id: 1 },
+      chat: { id: 1, title: 'gitbar' },
       urls: ['https://gitbar.it'],
       hashtags: [],
       from: { id: 1, username: 'test' },
@@ -83,7 +83,7 @@ describe('normalizeMessage', () => {
 
     expect(convertedMessage).toEqual({
       id: 1,
-      chat: { id: 1 },
+      chat: { id: 1, title: 'gitbar' },
       urls: [],
       hashtags: ['#test'],
       from: { id: 1, username: 'test' },
@@ -101,7 +101,7 @@ describe('normalizeMessage', () => {
 
     expect(convertedMessage).toEqual({
       id: 1,
-      chat: { id: 1 },
+      chat: { id: 1, title: 'gitbar' },
       urls: [],
       hashtags: [],
       from: { id: 1, username: 'test' },

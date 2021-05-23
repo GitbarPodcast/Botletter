@@ -14,6 +14,7 @@ export const normalizeTelegramMessage = (apiMessage: apiMessage.TextMessage) : M
         id: apiMessage.message_id,
         chat: {
             id: apiMessage.chat.id,
+            title: apiMessage.chat.type === 'group' ? apiMessage.chat.title : undefined,
         },
         urls: urls,
         hashtags: hashtags,

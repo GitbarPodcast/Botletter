@@ -14,6 +14,7 @@ export interface User {
 
 export interface Chat {
     id: TelegramID
+    title?: string
 }
 
 export interface Message {
