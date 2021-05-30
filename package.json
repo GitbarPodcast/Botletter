@@ -4,6 +4,7 @@
   "description": "Community Driven Newsletter",
   "license": "MIT",
   "scripts": {
+    "prepare": "husky install",
     "dev": "nodemon src/index.ts",
     "build": "tsc --project tsconfig.json",
     "prettier": "prettier --check \"**/*.ts\"",
