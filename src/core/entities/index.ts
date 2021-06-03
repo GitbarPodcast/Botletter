@@ -1,6 +1,7 @@
 export type Category = 'ARTICLE' | 'EVENT' | 'REPOSITORY' | 'VIDEO';
 
 export interface Entry {
+  id?: string;
   title: string;
   link: string;
   shortText: string;
