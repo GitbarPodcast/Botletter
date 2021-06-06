@@ -1,10 +1,10 @@
 import { JSDOM } from 'jsdom';
 
 type EnricherT = (html: string) => {
-  getTitle: () => string | null;
-  getDescription: () => string | null;
-  getImage: () => string | null;
-  getAuthor: () => string | null;
+  getTitle: () => string | undefined | null;
+  getDescription: () => string | undefined | null;
+  getImage: () => string | undefined | null;
+  getAuthor: () => string | undefined | null;
 };
 
 /**
@@ -22,9 +22,9 @@ type EnricherT = (html: string) => {
 const Enricher: EnricherT = (html) => {
   const { window } = new JSDOM(html);
 
-  const metaProperty = (property: string): string | null =>
+  const metaProperty = (property: string): string | undefined | null =>
     window.document.querySelector(`meta[property='${property}']`)?.getAttribute('content');
-  const metaName = (property: string): string | null =>
+  const metaName = (property: string): string | undefined | null =>
     window.document.querySelector(`meta[name='${property}']`)?.getAttribute('content');
 
   return {
