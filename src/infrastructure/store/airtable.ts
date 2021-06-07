@@ -74,11 +74,16 @@ const airtableToEntry = (airtableEntry: AirtableEntry): Entry => ({
  * out of the box we provide undiciRequest that uses
  * undici lib under the hood.
  *
- * Example:
- * import airtable from 'infrastructure/persistence/airtable';
- * import request from 'infrastructure/network/undiciRequest';
+ * import airtable from './infrastructure/store/airtable';
+ * import request from './infrastructure/network/undiciRequest';
+ * import dotenv from 'dotenv';
+ * dotenv.config();
  *
- * const store = airtable({apiKey: 'redacted', app: 'redacted', table: 'redacted', request });
+ * const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY || '';
+ * const AIRTABLE_BASE = process.env.AIRTABLE_BASE || '';
+ * const AIRTABLE_TABLE = process.env.AIRTABLE_TABLE || '';
+ *
+ * const store = airtable({ apiKey: AIRTABLE_API_KEY, app: AIRTABLE_BASE, table: AIRTABLE_TABLE, request });
  * store.create([{
  *  ... here the entity data structure
  * }])
