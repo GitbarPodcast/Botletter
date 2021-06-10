@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "dotenv": "^10.0.0",
-    "undici": "^3.3.6"
+    "undici": "^3.3.6",
     "jsdom": "^16.6.0"
   }
 }
