@@ -19,10 +19,11 @@
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@types/jest": "^26.0.23",
-    "@typescript-eslint/eslint-plugin": "^4.25.0",
-    "@typescript-eslint/parser": "^4.25.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
+    "@types/jsdom": "^16.2.11",
     "concurrently": "^6.2.0",
-    "eslint": "^7.27.0",
+    "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",
@@ -33,7 +34,7 @@
     "husky": "^6.0.0",
     "jest": "^26.4.2",
     "nodemon": "^2.0.7",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.1",
     "ts-jest": "^26.5.6",
     "ts-node": "^9.1.1",
     "typescript": "^4.3.2"
@@ -41,5 +42,6 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "undici": "^3.3.6"
+    "jsdom": "^16.6.0"
   }
 }
