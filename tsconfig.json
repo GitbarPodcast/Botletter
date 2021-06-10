@@ -4,7 +4,7 @@
   "compilerOptions": {
     "target": "ES2018",
     "module": "commonjs",
-    "lib": ["es2018"],
+    "lib": ["es2018", "dom"],
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
@@ -21,6 +21,7 @@
     "strictPropertyInitialization": false,
     "typeRoots": ["./node_modules/@types"],
     "noEmit": false,
-    "outDir": "build"
+    "outDir": "build",
+    "esModuleInterop": true
   }
 }
