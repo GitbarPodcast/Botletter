@@ -5,7 +5,7 @@ export const buildMCMessageFromMail = async (mail: Mail): Promise<MCMessage> => 
   const images = mail.getAttachedImages();
 
   const message: MCMessage = {
-    html: mail.getHtml(),
+    html: mail.getHTML(),
     text: mail.getPlainText(),
     subject: mail.getSubject(),
     from_email: mail.getFrom().address,

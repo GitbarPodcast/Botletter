@@ -30,8 +30,8 @@ export class Mail {
 
   private images: Record<string, AttachedImage> = {};
 
-  templateName: string | null = null;
-  templateContent: Record<string, string> = {};
+  private templateName: string | null = null;
+  private templateContent: Record<string, string> = {};
 
   setSubject(subject: string): this {
     this._mail.subject = subject;
@@ -82,7 +82,7 @@ export class Mail {
     return this.templateName !== null;
   }
 
-  getHtml(): string {
+  getHTML(): string {
     return this._mail.html;
   }
 
@@ -104,5 +104,13 @@ export class Mail {
 
   getAttachedImages(): [string, AttachedImage][] {
     return Object.entries(this.images);
+  }
+
+  getTemplateName(): string | null {
+    return this.templateName;
+  }
+
+  getTemplateContent(): Record<string, string> {
+    return this.templateContent;
   }
 }
