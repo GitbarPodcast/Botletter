@@ -3,7 +3,7 @@ import { Mail } from '../../Mail';
 import { BASE64_GIF } from '../../../../../utils/string';
 
 describe('buildMCMessageFromMail', () => {
-  test('send email with dryRun should return the an expected bodyPost', async () => {
+  test('it should build a Mailchimp object', async () => {
     const mail = new Mail();
     const resourceId = await mail.attachImage(Buffer.from(BASE64_GIF, 'base64'), 'myEmbeddedImage');
 
