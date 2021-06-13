@@ -1,6 +1,5 @@
 import { Mail } from '../Mail';
-
-const BASE64_GIF = 'R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+import { BASE64_GIF } from '../../../../utils/string';
 
 describe('mail class must set all properties', () => {
   test('attach image must work properly', async () => {

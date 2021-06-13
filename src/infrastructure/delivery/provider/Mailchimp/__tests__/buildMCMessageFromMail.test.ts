@@ -1,7 +1,6 @@
 import { buildMCMessageFromMail } from '../buildMCMessageFromMail';
 import { Mail } from '../../Mail';
-
-const BASE64_GIF = 'R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+import { BASE64_GIF } from '../../../../../utils/string';
 
 describe('buildMCMessageFromMail', () => {
   test('send email with dryRun should return the an expected bodyPost', async () => {

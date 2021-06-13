@@ -1,7 +1,6 @@
 import { Sender } from '../index';
 import { Mail } from '../../Mail';
-
-const BASE64_GIF = 'R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+import { BASE64_GIF } from '../../../../../utils/string';
 
 describe('sender flow with dryRun', () => {
   test('send email with dryRun should return a coherent bodyPost', async () => {
