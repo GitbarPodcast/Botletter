@@ -1,1 +1,1 @@
-export const date2utc = (datetime: Date) => datetime.toISOString().replace(/T/, ' ').split('.')[0];
+export const date2utc = (datetime: Date): string => datetime.toISOString().replace(/T/, ' ').split('.')[0];
