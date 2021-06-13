@@ -1,9 +1,28 @@
 import React = require('react');
 import { renderToStaticMarkup } from 'react-dom/server';
-import index from '../../assets/htmlTemplate';
+import { ServerStyleSheet } from 'styled-components';
+import juice from 'juice';
 
-const renderer = () => {
-  return renderToStaticMarkup(React.createElement(index, { pippo: 'ciao' }));
+import { NewsletterContent } from '../entities';
+
+type TemplateT = React.FC<{ data: NewsletterContent }>;
+
+const declassify = (html: string): string => html.replace(/( )?class="[a-zA-Z0-9:;.\s()\-,]*"/g, '');
+
+const renderer = (data: NewsletterContent, template: TemplateT): string | undefined => {
+  const sheet = new ServerStyleSheet();
+  try {
+    const element = sheet.collectStyles(React.createElement(template, { data: data }));
+    const html = renderToStaticMarkup(element);
+    const styleTags = sheet.getStyleTags();
+    const htmlWithInlineStyles = juice(`${styleTags}${html}`);
+    return declassify(htmlWithInlineStyles);
+  } catch (error) {
+    console.error(error);
+    return;
+  } finally {
+    sheet.seal();
+  }
 };
 
 export default renderer;

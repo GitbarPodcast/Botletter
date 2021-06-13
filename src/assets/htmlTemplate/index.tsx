@@ -1,17 +1,23 @@
+import styled from 'styled-components';
+import { NewsletterContent } from '../../core/entities';
+
 const C = (): JSX.Element => {
   return <div>miao</div>;
 };
 
-const M = (props: { pippo: string }): JSX.Element => {
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`;
+
+const M = (props: { data: NewsletterContent }): JSX.Element => {
   return (
     <html>
-      <head>
-        <title>dfsdfs</title>
-      </head>
       <body>
-        <div>
-          {props.pippo} <C></C>
-        </div>
+        <Title>
+          {props.data?.episode?.title} <C></C>
+        </Title>
       </body>
     </html>
   );

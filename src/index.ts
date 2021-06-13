@@ -1,3 +1,3 @@
-import renderer from './core/templating';
-
-console.log(renderer());
+export default function sum(a: number, b: number): number {
+  return a + b;
+}
