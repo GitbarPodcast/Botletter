@@ -17,9 +17,6 @@ const renderer = (data: NewsletterContent, template: TemplateT): string | undefi
     const styleTags = sheet.getStyleTags();
     const htmlWithInlineStyles = juice(`${styleTags}${html}`);
     return declassify(htmlWithInlineStyles);
-  } catch (error) {
-    console.error(error);
-    return;
   } finally {
     sheet.seal();
   }
