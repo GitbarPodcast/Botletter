@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`templating it should render the template 1`] = `"<html><body><h1 style=\\"font-size: 1.5em; text-align: center; color: palevioletred;\\">TO BE IMPLEMENTED!titolo</h1></body></html>"`;
