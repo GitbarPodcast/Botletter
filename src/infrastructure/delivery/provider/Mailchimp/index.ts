@@ -1,9 +1,9 @@
-import { Provider, ProviderResponse } from '../entities';
-import { Client } from 'undici';
+import { Provider, ProviderResponseT, ResponseT } from '../entities';
 import { buildMCMessageFromMail } from './buildMCMessageFromMail';
-import { PostMessage } from './entities';
-import { date2utc } from '../../../../utils/date';
-import { Mail } from '../Mail';
+import { MailChimpResponseT, PostMessage } from './entities';
+import { date2YodaTime } from '../../../../utils/date';
+import { EmailAddressT, Mail } from '../Mail';
+import { RequestT } from '../../../network/types';
 
 const ENDPOINT_PROTOCOL_HOST = 'https://mandrillapp.com';
 const ENDPOINT_BASE = '/api/1.0/';
@@ -16,73 +16,78 @@ const getEndpointFromMessage = (mail: Mail): string => {
   return ENDPOINT_MESSAGES_SEND;
 };
 
+const buildResponseFromMailchimpResponse = (response: MailChimpResponseT[]): ResponseT => {
+  return response.reduce(
+    (accumulator: ResponseT, current: MailChimpResponseT) => {
+      switch (current.status) {
+        case 'sent':
+          accumulator.success[current.email] = current._id;
+          break;
+        case 'scheduled':
+        case 'queued':
+          accumulator.pending[current.email] = current._id;
+          break;
+        case 'invalid':
+        case 'rejected':
+          accumulator.fails[current.email] = current.reject_reason ?? current.status;
+          break;
+      }
+      accumulator.extra += `${current.email} ${current.status}\n`;
+      return accumulator;
+    },
+    { fails: {}, success: {}, pending: {}, extra: '' },
+  );
+};
+
 export class Sender implements Provider {
   private sendAt: Date | null = null;
   private readonly apiKey: string;
-  private _dryRun = false;
 
   constructor(apiKey: string) {
     this.apiKey = apiKey;
-  }
-
-  dryRun(isDryRun: boolean): void {
-    this._dryRun = isDryRun;
   }
 
   schedule(date: Date): void {
     this.sendAt = date;
   }
 
-  async send(mail: Mail): Promise<ProviderResponse> {
-    const client = new Client(ENDPOINT_PROTOCOL_HOST);
+  async send(mail: Mail, request: RequestT): Promise<ProviderResponseT> {
     const mcMessage = await buildMCMessageFromMail(mail);
 
     const bodyPost: PostMessage = {
-      key: '',
+      key: this.apiKey,
       message: mcMessage,
     };
 
-    bodyPost.key = this.apiKey;
-
     if (this.sendAt) {
-      bodyPost.send_at = date2utc(this.sendAt);
+      bodyPost.send_at = date2YodaTime(this.sendAt);
     }
 
     const endpoint = getEndpointFromMessage(mail);
 
     try {
-      if (this._dryRun) {
-        return {
-          status: 'dryRun',
-          message: JSON.stringify({
-            endpoint,
-            bodyPost,
-          }),
-        };
-      } else {
-        const { body } = await client.request({
-          bodyTimeout: 0,
-          headers: {
-            'content-type': 'application/json',
-          },
-          method: 'POST',
-          path: endpoint,
-          body: JSON.stringify(bodyPost),
-        });
-        let responseString = '';
-        for await (const data of body) {
-          responseString += data.toString();
-        }
-        const responseObj = JSON.parse(responseString);
-        return {
-          status: responseObj.status === 200 ? 'success' : 'error',
-          message: responseString,
-        };
-      }
+      const responseObj = <MailChimpResponseT[]>await request({
+        basePath: ENDPOINT_PROTOCOL_HOST,
+        authorization: '',
+        body: bodyPost,
+        method: 'POST',
+        path: endpoint,
+      });
+
+      return {
+        status: 'success',
+        message: buildResponseFromMailchimpResponse(responseObj),
+      };
     } catch (e) {
+      mail
+        .getToRecipient()
+        .reduce((accumulator: Record<string, string>, current: EmailAddressT): Record<string, string> => {
+          accumulator[current.address] = 'fails';
+          return accumulator;
+        }, {});
       return {
         status: 'error',
-        message: e.toString(),
+        message: { fails: {}, success: {}, pending: {}, extra: e.toString() },
       };
     }
   }

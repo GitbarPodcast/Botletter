@@ -1,9 +1,12 @@
 import { Sender } from '../index';
 import { Mail } from '../../Mail';
 import { BASE64_GIF } from '../../../../../utils/string';
+import { MailChimpResponseT } from '../entities';
+import { ProviderResponseT } from '../../entities';
 
-describe('sender flow with dryRun', () => {
-  test('send email with dryRun should return a coherent bodyPost', async () => {
+describe('sender flow', () => {
+  test('send email should return a coherent bodyPost', async () => {
+    const fakeRquest = jest.fn();
     const mail = new Mail();
     const resourceId = await mail.attachImage(Buffer.from(BASE64_GIF, 'base64'), 'myEmbeddedImage');
 
@@ -13,24 +16,23 @@ describe('sender flow with dryRun', () => {
       .setFrom({ address: 'test@test.it', name: 'Test' })
       .addTo({ address: 'to@test.it', name: 'receiver test' })
       .setSubject('My subject');
-
-    const sender = new Sender('justTest');
-    sender.dryRun(true);
-    const response = await sender.send(mail);
-
-    expect(response.status).toBe('dryRun');
-    expect(() => JSON.parse(response.message)).not.toThrow('response.message must be a valid json');
-    expect(JSON.parse(response.message).bodyPost).toStrictEqual({
-      key: 'justTest',
+    const mockedResponse: MailChimpResponseT = {
+      _id: '123',
+      email: 'to@test.it',
+      status: 'sent',
+    };
+    const sender = new Sender('justTestApiKey');
+    fakeRquest.mockImplementation(() => [mockedResponse]);
+    const response = await sender.send(mail, fakeRquest);
+    const expectedResponse: ProviderResponseT = {
+      status: 'success',
       message: {
-        from_email: 'test@test.it',
-        from_name: 'Test',
-        html: `<h1>Hello World</h1><p>This is an image: <img src="cid:${resourceId}" alt="embedded image"></p>`,
-        text: 'Hello world this is an image: embedded image',
-        images: [{ content: BASE64_GIF, name: 'myEmbeddedImage', type: 'image/gif' }],
-        subject: 'My subject',
-        to: [{ email: 'to@test.it', name: 'receiver test', type: 'to' }],
+        fails: {},
+        success: { 'to@test.it': '123' },
+        pending: {},
+        extra: 'to@test.it sent\n',
       },
-    });
+    };
+    expect(response).toStrictEqual(expectedResponse);
   });
 });

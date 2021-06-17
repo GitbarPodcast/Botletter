@@ -1,20 +1,20 @@
 import { generateId } from '../../../utils/string';
 import { fromBuffer } from 'file-type';
 
-export type EmailAddress = {
+export type EmailAddressT = {
   address: string;
   name: string;
 };
 
 type MailT = {
   subject: string;
-  to: Array<EmailAddress>;
-  from: EmailAddress;
+  to: Array<EmailAddressT>;
+  from: EmailAddressT;
   html: string;
   plainText: string | null;
 };
 
-export type AttachedImage = {
+export type AttachedImageT = {
   data: Buffer;
   mimeType: string;
 };
@@ -28,7 +28,7 @@ export class Mail {
     plainText: null,
   };
 
-  private images: Record<string, AttachedImage> = {};
+  private images: Record<string, AttachedImageT> = {};
 
   private templateName: string | null = null;
   private templateContent: Record<string, string> = {};
@@ -38,12 +38,12 @@ export class Mail {
     return this;
   }
 
-  addTo(email: EmailAddress): this {
+  addTo(email: EmailAddressT): this {
     this._mail.to.push(email);
     return this;
   }
 
-  setFrom(email: EmailAddress): this {
+  setFrom(email: EmailAddressT): this {
     this._mail.from = email;
     return this;
   }
@@ -68,9 +68,9 @@ export class Mail {
     return this;
   }
 
-  async attachImage(buffer: Buffer, id = ''): Promise<string> {
-    if (id === '') id = generateId();
-    const mimeType = (await fromBuffer(buffer))?.mime || '';
+  async attachImage(buffer: Buffer, id?: string): Promise<string> {
+    id = id ?? generateId();
+    const mimeType = (await fromBuffer(buffer))?.mime ?? '';
     if (mimeType.substr(0, 6) !== 'image/') {
       throw new Error(`Image ${id} not recognized or not an image. mimetype "${mimeType}"`);
     }
@@ -94,15 +94,15 @@ export class Mail {
     return this._mail.subject;
   }
 
-  getFrom(): EmailAddress {
+  getFrom(): EmailAddressT {
     return this._mail.from;
   }
 
-  getToRecipient(): Array<EmailAddress> {
+  getToRecipient(): Array<EmailAddressT> {
     return this._mail.to;
   }
 
-  getAttachedImages(): [string, AttachedImage][] {
+  getAttachedImages(): [string, AttachedImageT][] {
     return Object.entries(this.images);
   }
 

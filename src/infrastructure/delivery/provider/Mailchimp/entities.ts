@@ -46,3 +46,20 @@ export interface PostTemplateMessage extends PostMessage {
   template_name: string;
   template_content: Array<TemplatePart>;
 }
+
+export type MailChimpResponseT = {
+  email: string;
+  status: 'sent' | 'queued' | 'scheduled' | 'rejected' | 'invalid';
+  reject_reason?:
+    | 'hard_bounce'
+    | 'soft_bounce'
+    | 'spam'
+    | 'unsub'
+    | 'custom'
+    | 'invalid-sender'
+    | 'invalid'
+    | 'test-mode-limit'
+    | 'unsigned'
+    | 'rule';
+  _id: string;
+};

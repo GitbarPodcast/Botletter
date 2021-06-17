@@ -1,5 +1,5 @@
 import { MCMessage } from './entities';
-import { AttachedImage, EmailAddress, Mail } from '../Mail';
+import { AttachedImageT, EmailAddressT, Mail } from '../Mail';
 
 export const buildMCMessageFromMail = async (mail: Mail): Promise<MCMessage> => {
   const images = mail.getAttachedImages();
@@ -10,15 +10,15 @@ export const buildMCMessageFromMail = async (mail: Mail): Promise<MCMessage> => 
     subject: mail.getSubject(),
     from_email: mail.getFrom().address,
     from_name: mail.getFrom().name,
-    to: mail.getToRecipient().map((to: EmailAddress) => ({
+    to: mail.getToRecipient().map((to: EmailAddressT) => ({
       email: to.address,
       name: to.name,
       type: 'to',
     })),
   };
 
-  if (images.length) {
-    message.images = images.map(([id, { data, mimeType }]: [string, AttachedImage]) => ({
+  if (images.length > 0) {
+    message.images = images.map(([id, { data, mimeType }]: [string, AttachedImageT]) => ({
       type: mimeType,
       name: id,
       content: data.toString('base64'),
