@@ -16,7 +16,7 @@ export interface Recipient {
   type: string;
 }
 
-type AttachedImage = {
+type AttachedImageT = {
   type: string;
   name: string;
   content: string;
@@ -32,7 +32,7 @@ export interface MCMessage {
   headers?: Record<string, string>;
   return_path_domain?: string;
   tags?: Array<string>;
-  images?: Array<AttachedImage>;
+  images?: Array<AttachedImageT>;
 }
 
 export interface PostMessage {
