@@ -4,7 +4,7 @@ import { RequestT } from './types';
 const request: RequestT = async ({ basePath, authorization, method, path, body }) => {
   const client = new Client(basePath);
   const { body: responseBody } = await client.request({
-    bodyTimeout: 0,
+    origin: '*',
     headers: {
       authorization: `Bearer ${authorization}`,
       'content-type': 'application/json',
@@ -20,6 +20,7 @@ const request: RequestT = async ({ basePath, authorization, method, path, body }
     responseString += data.toString();
   }
 
+  console.log(responseString);
   return JSON.parse(responseString);
 };
 
