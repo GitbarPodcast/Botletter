@@ -2,9 +2,9 @@ import { Client } from 'undici';
 import { RequestT } from './types';
 
 const contentTypes = {
-  'HTML': 'text/html',
-  'JSON': 'application/json'
-}
+  HTML: 'text/html',
+  JSON: 'application/json',
+};
 
 const request: RequestT = async ({ basePath, authorization, method, path, body, content }) => {
   const client = new Client(basePath);
@@ -25,7 +25,7 @@ const request: RequestT = async ({ basePath, authorization, method, path, body, 
     responseString += data.toString();
   }
 
-  switch(content) {
+  switch (content) {
     case 'JSON':
       return JSON.parse(responseString);
     default:
