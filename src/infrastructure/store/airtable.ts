@@ -100,6 +100,7 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
         method: 'POST',
         path: `/v0/${app}/${table}`,
         body,
+        content: 'JSON'
       });
 
       return result?.records.length > 0;
@@ -114,6 +115,7 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
         method: 'PATCH',
         path: `/v0/${app}/${table}`,
         body,
+        content: 'JSON',
       });
 
       return result?.records.length === ids.length;
@@ -124,6 +126,7 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
         authorization: apiKey,
         method: 'GET',
         path: `/v0/${app}/${table}?filterByFormula=({sentDate}="")`,
+        content: 'JSON'
       });
 
       return result?.records.map(airtableToEntry);
@@ -135,6 +138,7 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
         authorization: apiKey,
         method: 'GET',
         path: `/v0/${app}/${table}/${id}`,
+        content: 'JSON'
       });
 
       return result && airtableToEntry(result);
