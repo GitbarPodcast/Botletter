@@ -1,5 +1,5 @@
+import { RequestOptions } from 'undici/types/dispatcher';
 import request from '../undiciRequest';
-import { RequestOptions } from 'undici/types/client';
 
 const mockClientRequest = jest.fn();
 
@@ -25,7 +25,7 @@ describe('undici request supports multiple content types', () => {
     });
 
     const expectedRequestOptions: RequestOptions = {
-      bodyTimeout: 0,
+      origin: '*',
       headers: {
         authorization: `Bearer `,
         'content-type': 'text/html',
@@ -50,7 +50,7 @@ describe('undici request supports multiple content types', () => {
     });
 
     const expectedRequestOptions: RequestOptions = {
-      bodyTimeout: 0,
+      origin: '*',
       headers: {
         authorization: `Bearer token`,
         'content-type': 'application/json',
