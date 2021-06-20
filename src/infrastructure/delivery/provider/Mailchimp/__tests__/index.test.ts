@@ -5,8 +5,33 @@ import { MailChimpResponseT } from '../entities';
 import { ProviderResponseT } from '../../entities';
 
 describe('sender flow', () => {
+  test('Mailchimp implementation should catch errors properly', async () => {
+    const request = jest.fn();
+    const mockedResponse = {
+      status: 'error',
+      message: 'invalid request',
+    };
+    request.mockImplementation(() => mockedResponse);
+
+    const mail = new Mail();
+    mail.addTo({ name: 'test', address: 'test-rec@test.it' });
+
+    const sender = new Sender('justTestApiKey');
+    const response = await sender.send(mail, request);
+
+    const expectedResponse: ProviderResponseT = {
+      status: 'error',
+      message: {
+        fails: { 'test-rec@test.it': 'fails' },
+        success: {},
+        pending: {},
+        extra: `Error: Unexpected response ${JSON.stringify(mockedResponse)}`,
+      },
+    };
+    expect(response).toStrictEqual(expectedResponse);
+  });
   test('send email should return a coherent bodyPost', async () => {
-    const fakeRquest = jest.fn();
+    const request = jest.fn();
     const mail = new Mail();
     const resourceId = await mail.attachImage(Buffer.from(BASE64_GIF, 'base64'), 'myEmbeddedImage');
 
@@ -22,8 +47,8 @@ describe('sender flow', () => {
       status: 'sent',
     };
     const sender = new Sender('justTestApiKey');
-    fakeRquest.mockImplementation(() => [mockedResponse]);
-    const response = await sender.send(mail, fakeRquest);
+    request.mockImplementation(() => [mockedResponse]);
+    const response = await sender.send(mail, request);
     const expectedResponse: ProviderResponseT = {
       status: 'success',
       message: {

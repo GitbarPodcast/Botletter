@@ -17,6 +17,9 @@ const getEndpointFromMessage = (mail: Mail): string => {
 };
 
 const buildResponseFromMailchimpResponse = (response: MailChimpResponseT[]): ResponseT => {
+  if (!Array.isArray(response)) {
+    throw new Error('Unexpected response ' + JSON.stringify(response));
+  }
   return response.reduce(
     (accumulator: ResponseT, current: MailChimpResponseT) => {
       switch (current.status) {
@@ -80,7 +83,7 @@ export class Sender implements Provider {
         message: buildResponseFromMailchimpResponse(responseObj),
       };
     } catch (e) {
-      mail
+      const fails = mail
         .getToRecipient()
         .reduce((accumulator: Record<string, string>, current: EmailAddressT): Record<string, string> => {
           accumulator[current.address] = 'fails';
@@ -88,7 +91,7 @@ export class Sender implements Provider {
         }, {});
       return {
         status: 'error',
-        message: { fails: {}, success: {}, pending: {}, extra: e.toString() },
+        message: { fails, success: {}, pending: {}, extra: e.toString() },
       };
     }
   }
