@@ -72,6 +72,7 @@ export class Sender implements Provider {
         body: bodyPost,
         method: 'POST',
         path: endpoint,
+        content: 'JSON',
       });
 
       return {
