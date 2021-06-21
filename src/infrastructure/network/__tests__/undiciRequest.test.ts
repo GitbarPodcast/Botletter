@@ -1,5 +1,6 @@
 import { RequestOptions } from 'undici/types/dispatcher';
 import request from '../undiciRequest';
+import { headerBuildBearerAuthorization, headerBuildRequestBodyContentType } from '../builder/headers';
 
 const mockClientRequest = jest.fn();
 
@@ -18,16 +19,14 @@ describe('undici request supports multiple content types', () => {
     }));
     await request({
       basePath: 'https://gitbar.com',
-      authorization: '',
       method: 'GET',
       path: '/index',
-      content: 'HTML',
+      headers: [headerBuildRequestBodyContentType('HTML')],
     });
 
     const expectedRequestOptions: RequestOptions = {
       origin: '*',
       headers: {
-        authorization: `Bearer `,
         'content-type': 'text/html',
       },
       method: 'GET',
@@ -43,10 +42,9 @@ describe('undici request supports multiple content types', () => {
     }));
     await request({
       basePath: 'https://gitbar.com',
-      authorization: 'token',
       method: 'GET',
       path: '/index',
-      content: 'JSON',
+      headers: [headerBuildRequestBodyContentType('JSON'), headerBuildBearerAuthorization('token')],
     });
 
     const expectedRequestOptions: RequestOptions = {
@@ -69,10 +67,9 @@ describe('undici request supports multiple content types', () => {
     }));
     const data: string = await request({
       basePath: 'https://gitbar.com',
-      authorization: '',
       method: 'GET',
       path: '/index',
-      content: 'HTML',
+      headers: [headerBuildRequestBodyContentType('HTML')],
     });
 
     expect(data).toBe(htmlMock);
@@ -84,10 +81,10 @@ describe('undici request supports multiple content types', () => {
     }));
     const data: string = await request({
       basePath: 'https://gitbar.com',
-      authorization: '',
       method: 'GET',
       path: '/index',
-      content: 'JSON',
+      headers: [headerBuildRequestBodyContentType('JSON')],
+      responseParser: JSON.parse,
     });
 
     expect(JSON.stringify(data)).toBe(jsonMock);

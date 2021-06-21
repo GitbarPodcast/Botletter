@@ -1,19 +1,18 @@
 import { Client } from 'undici';
 import { RequestT } from './types';
 
-const contentTypes = {
-  HTML: 'text/html',
-  JSON: 'application/json',
-};
-
-const request: RequestT = async ({ basePath, authorization, method, path, body, content }) => {
+const request: RequestT = async ({
+  basePath,
+  headers,
+  method,
+  path,
+  body,
+  responseParser = <K>(response: string) => response as unknown as K,
+}) => {
   const client = new Client(basePath);
   const { body: responseBody } = await client.request({
     origin: '*',
-    headers: {
-      authorization: `Bearer ${authorization}`,
-      'content-type': contentTypes[content],
-    },
+    headers: Object.fromEntries(headers),
     method,
     path,
     body: JSON.stringify(body),
@@ -25,12 +24,7 @@ const request: RequestT = async ({ basePath, authorization, method, path, body, 
     responseString += data.toString();
   }
 
-  switch (content) {
-    case 'JSON':
-      return JSON.parse(responseString);
-    default:
-      return responseString;
-  }
+  return responseParser(responseString);
 };
 
 export default request;
