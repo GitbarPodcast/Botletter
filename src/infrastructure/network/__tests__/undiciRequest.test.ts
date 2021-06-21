@@ -67,13 +67,13 @@ describe('undici request supports multiple content types', () => {
     mockClientRequest.mockImplementation(() => ({
       body: htmlMock,
     }));
-    const data: string = await request({
+    const data = (await request({
       basePath: 'https://gitbar.com',
       authorization: '',
       method: 'GET',
       path: '/index',
       content: 'HTML',
-    });
+    })) as string;
 
     expect(data).toBe(htmlMock);
   });
@@ -82,13 +82,13 @@ describe('undici request supports multiple content types', () => {
     mockClientRequest.mockImplementation(() => ({
       body: jsonMock,
     }));
-    const data: string = await request({
+    const data = (await request({
       basePath: 'https://gitbar.com',
       authorization: '',
       method: 'GET',
       path: '/index',
       content: 'JSON',
-    });
+    })) as string;
 
     expect(JSON.stringify(data)).toBe(jsonMock);
   });

@@ -1,10 +1,10 @@
-export interface RequestProps<T> {
+export interface RequestProps {
   basePath: string;
   authorization: string;
   method: 'POST' | 'GET' | 'PATCH';
   path: string;
-  body?: T;
+  body?: unknown;
   content: 'JSON' | 'HTML';
 }
 
-export type RequestT = <T, K>(props: RequestProps<T>) => Promise<K>;
+export type RequestT = (props: RequestProps) => Promise<unknown>;

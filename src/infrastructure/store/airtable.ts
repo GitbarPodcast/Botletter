@@ -94,14 +94,14 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
       const body = {
         records: entries.map((e) => entrytoAirtable(e)),
       };
-      const result = await request<SaveBodyMessage, SaveResponse>({
+      const result = (await request({
         basePath: 'https://api.airtable.com',
         authorization: apiKey,
         method: 'POST',
         path: `/v0/${app}/${table}`,
         body,
         content: 'JSON',
-      });
+      })) as SaveResponse;
 
       return result?.records.length > 0;
     },
@@ -109,37 +109,37 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
       const body = {
         records: ids.map((id) => ({ id, fields: { sentDate: new Date() } })),
       };
-      const result = await request<SetSentBodyMessage, SaveResponse>({
+      const result = (await request({
         basePath: 'https://api.airtable.com',
         authorization: apiKey,
         method: 'PATCH',
         path: `/v0/${app}/${table}`,
         body,
         content: 'JSON',
-      });
+      })) as SaveResponse;
 
       return result?.records.length === ids.length;
     },
     getToSend: async () => {
-      const result = await request<undefined, GetToSendResponse>({
+      const result = (await request({
         basePath: 'https://api.airtable.com',
         authorization: apiKey,
         method: 'GET',
         path: `/v0/${app}/${table}?filterByFormula=({sentDate}="")`,
         content: 'JSON',
-      });
+      })) as GetToSendResponse;
 
       return result?.records.map(airtableToEntry);
     },
     getById: async (id) => {
       // return entry or fail
-      const result = await request<undefined, AirtableEntry>({
+      const result = (await request({
         basePath: 'https://api.airtable.com',
         authorization: apiKey,
         method: 'GET',
         path: `/v0/${app}/${table}/${id}`,
         content: 'JSON',
-      });
+      })) as AirtableEntry;
 
       return result && airtableToEntry(result);
     },
