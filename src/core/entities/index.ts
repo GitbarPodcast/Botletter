@@ -10,3 +10,15 @@ export interface Entry {
   category: Category;
   createdAt: Date;
 }
+
+export interface Episode {
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+}
+
+export interface NewsletterContent {
+  articles: Entry[];
+  episode: Episode;
+}
