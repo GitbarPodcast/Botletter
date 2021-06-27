@@ -5,3 +5,9 @@
 > Turn your telegram community links into a newsletter
 
 TODO: insert here a readme
+
+## Notes
+
+To have a better node management you should to install volta, with volta this project will run with the environment defined in the volta prop inside the package.json
+
+More info on https://volta.sh/
