@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 // import request from '../../infrastructure/network/undiciRequest';
 // import { Store } from '../../infrastructure/store';
-import { setup as telegramSetup } from '../../infrastructure/source/telegram';
+import { setup as telegramSetup } from '../../infrastructure/telegram/telegram';
 dotenv.config();
 
 // const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY || '';
