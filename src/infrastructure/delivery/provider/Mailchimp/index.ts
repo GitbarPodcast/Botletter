@@ -4,6 +4,7 @@ import { MailChimpResponseT, PostMessage } from './entities';
 import { date2YodaTime } from '../../../../utils/date';
 import { EmailAddressT, Mail } from '../Mail';
 import { RequestT } from '../../../network/types';
+import { headerBuildRequestBodyContentType } from '../../../network/builder/headers';
 
 const ENDPOINT_PROTOCOL_HOST = 'https://mandrillapp.com';
 const ENDPOINT_BASE = '/api/1.0/';
@@ -71,11 +72,10 @@ export class Sender implements Provider {
     try {
       const responseObj = <MailChimpResponseT[]>await request({
         basePath: ENDPOINT_PROTOCOL_HOST,
-        authorization: '',
         body: bodyPost,
         method: 'POST',
         path: endpoint,
-        content: 'JSON',
+        headers: [headerBuildRequestBodyContentType('JSON')],
       });
 
       return {
