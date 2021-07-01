@@ -30,7 +30,7 @@
     "@types/styled-components": "^5.1.10",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
-    "@types/jsdom": "^16.2.11",
+    "@types/jsdom": "^16.2.12",
     "concurrently": "^6.2.0",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
