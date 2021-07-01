@@ -1,5 +1,6 @@
 import { Category, Entry } from '../../core/entities';
 import { RequestT } from '../network/types';
+import { headerBuildBearerAuthorization, headerBuildRequestBodyContentType } from '../network/builder/headers';
 
 interface AirtableProps {
   apiKey: string;
@@ -96,11 +97,11 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
       };
       const result = await request<SaveBodyMessage, SaveResponse>({
         basePath: 'https://api.airtable.com',
-        authorization: apiKey,
+        headers: [headerBuildBearerAuthorization(apiKey), headerBuildRequestBodyContentType('JSON')],
         method: 'POST',
         path: `/v0/${app}/${table}`,
         body,
-        content: 'JSON',
+        responseParser: JSON.parse,
       });
 
       return result?.records.length > 0;
@@ -111,11 +112,11 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
       };
       const result = await request<SetSentBodyMessage, SaveResponse>({
         basePath: 'https://api.airtable.com',
-        authorization: apiKey,
+        headers: [headerBuildBearerAuthorization(apiKey), headerBuildRequestBodyContentType('JSON')],
         method: 'PATCH',
         path: `/v0/${app}/${table}`,
         body,
-        content: 'JSON',
+        responseParser: JSON.parse,
       });
 
       return result?.records.length === ids.length;
@@ -123,10 +124,10 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
     getToSend: async () => {
       const result = await request<undefined, GetToSendResponse>({
         basePath: 'https://api.airtable.com',
-        authorization: apiKey,
+        headers: [headerBuildBearerAuthorization(apiKey), headerBuildRequestBodyContentType('JSON')],
         method: 'GET',
         path: `/v0/${app}/${table}?filterByFormula=({sentDate}="")`,
-        content: 'JSON',
+        responseParser: JSON.parse,
       });
 
       return result?.records.map(airtableToEntry);
@@ -135,10 +136,10 @@ export default ({ apiKey, app, table, request }: AirtableProps): Store => {
       // return entry or fail
       const result = await request<undefined, AirtableEntry>({
         basePath: 'https://api.airtable.com',
-        authorization: apiKey,
+        headers: [headerBuildBearerAuthorization(apiKey), headerBuildRequestBodyContentType('JSON')],
         method: 'GET',
         path: `/v0/${app}/${table}/${id}`,
-        content: 'JSON',
+        responseParser: JSON.parse,
       });
 
       return result && airtableToEntry(result);
