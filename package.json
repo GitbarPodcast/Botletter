@@ -24,7 +24,7 @@
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@types/file-type": "^10.9.1",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^26.0.24",
     "@types/react": "^17.0.14",
     "@types/styled-components": "^5.1.11",
     "@types/react-dom": "^17.0.9",
