@@ -5701,10 +5701,10 @@ undefsafe@^2.0.3:
   dependencies:
     debug "^2.2.0"
 
-undici@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-4.1.0.tgz#1e1f83e5064c67eddd53707d7819ccfad6c208a4"
-  integrity sha512-Y1e/pSDLtNT4nXSQc4C7eiqoiV7pq8QmsvD7/6cbUuUER0MewR3xwBswYiHYWqVI4FcUptjHixrdqW4xrmo4uA==
+undici@^4.4.3:
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-4.4.3.tgz#77a86225b307406cdce31bce24df2afabff4ee5c"
+  integrity sha512-afb4+kNpEFoEgWsyjAr8UfnjMXF8tcWqPkjaclk6nPf9DVxU1xWKGeMBcIAu/aSmvT79nXpAHOrDdbmrBZRVcg==
 
 union-value@^1.0.0:
   version "1.0.1"
