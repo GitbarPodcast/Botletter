@@ -7,7 +7,8 @@ import { NewsletterContent } from '../entities';
 
 type TemplateT = React.FC<{ data: NewsletterContent }>;
 
-const declassify = (html: string): string => html.replace(/( )?class="[a-zA-Z0-9:;.\s()\-,]*"/g, '');
+const declassify = (html: string): string =>
+  html.replace(/( )?class="[a-zA-Z0-9:;.\s()\-,]*"/g, '');
 
 const renderer = (data: NewsletterContent, template: TemplateT): string | undefined => {
   const sheet = new ServerStyleSheet();

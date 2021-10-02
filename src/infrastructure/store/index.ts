@@ -1,5 +1,8 @@
 import { Entry } from '../../core/entities/index';
 
 export interface Store {
-  save(entries: Entry[]): Promise<boolean>;
+  create: (entries: Entry[]) => Promise<boolean>;
+  setSent: (ids: string[]) => Promise<boolean>;
+  getToSend: () => Promise<Array<Entry>>;
+  getById: (id: string) => Promise<Entry>;
 }

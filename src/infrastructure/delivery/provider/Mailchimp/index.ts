@@ -85,10 +85,13 @@ export class Sender implements Provider {
     } catch (e) {
       const fails = mail
         .getToRecipient()
-        .reduce((accumulator: Record<string, string>, current: EmailAddressT): Record<string, string> => {
-          accumulator[current.address] = 'fails';
-          return accumulator;
-        }, {});
+        .reduce(
+          (accumulator: Record<string, string>, current: EmailAddressT): Record<string, string> => {
+            accumulator[current.address] = 'fails';
+            return accumulator;
+          },
+          {},
+        );
       return {
         status: 'error',
         message: { fails, success: {}, pending: {}, extra: e.toString() },

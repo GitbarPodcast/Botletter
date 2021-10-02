@@ -36,7 +36,9 @@ describe('sender flow', () => {
     const resourceId = await mail.attachImage(Buffer.from(BASE64_GIF, 'base64'), 'myEmbeddedImage');
 
     mail
-      .setHTML(`<h1>Hello World</h1><p>This is an image: <img src="cid:${resourceId}" alt="embedded image"></p>`)
+      .setHTML(
+        `<h1>Hello World</h1><p>This is an image: <img src="cid:${resourceId}" alt="embedded image"></p>`,
+      )
       .setPlainText('Hello world this is an image: embedded image')
       .setFrom({ address: 'test@test.it', name: 'Test' })
       .addTo({ address: 'to@test.it', name: 'receiver test' })

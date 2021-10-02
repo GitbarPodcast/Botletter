@@ -31,8 +31,8 @@ describe('buildMCMessageFromMail', () => {
 
   test('attachImage must accept only images', () => {
     const mail = new Mail();
-    expect(mail.attachImage(Buffer.from('simple ascii string', 'ascii'), 'myEmbeddedImage')).rejects.toThrowError(
-      Error,
-    );
+    expect(
+      mail.attachImage(Buffer.from('simple ascii string', 'ascii'), 'myEmbeddedImage'),
+    ).rejects.toThrowError(Error);
   });
 });
