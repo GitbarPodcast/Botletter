@@ -21,7 +21,7 @@
     "yarn": "1.22.10"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.4",
+    "@commitlint/cli": "^13.2.0",
     "@commitlint/config-conventional": "^12.1.4",
     "@types/file-type": "^10.9.1",
     "@types/jest": "^26.0.24",
