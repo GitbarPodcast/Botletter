@@ -53,7 +53,7 @@
     "juice": "^8.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "styled-components": "^5.3.0",
+    "styled-components": "^5.3.5",
     "dotenv": "^10.0.0",
     "undici": "^4.7.0",
     "jsdom": "^16.6.0"
